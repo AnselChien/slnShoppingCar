@@ -1,0 +1,66 @@
+﻿@model IEnumerable<prjShoppingCar.Models.tProduct>
+
+@{
+    ViewBag.Title = "產品管理";
+}
+
+
+
+<h2>產品管理</h2>
+
+@if (ViewBag.ResultMessage != null)//判斷如果有訊息，則顯示。
+{
+    @Html.Label("info", (string)ViewBag.ResultMessage, new { @class = "text-info" })
+}
+
+
+<p>
+    @Html.ActionLink("建立商品", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fPId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fImg)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fPId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fImg)
+            </td>
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { id = item.fId } , new { @class= "btn btn-default" }) 
+                
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { @class = "Delete" , onclick = "return confirm('確定要刪除該筆資料？')" }))
+                {
+                    @Html.Hidden("id", item.fId  )
+                    <input type="submit" value="刪除" class="btn btn-default" /> 
+                }
+            </td>
+        </tr>
+    }
+
+</table>
